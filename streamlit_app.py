@@ -15,12 +15,44 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded"
 )
-
 # ========== PATHS ==========
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-DB_PATH = os.path.join(BASE_DIR, 'backend', 'database', 'soil_app.db')
-MODEL_PATH = os.path.join(BASE_DIR, 'backend', 'models', 'soil_classifier.h5')
-UPLOAD_DIR = os.path.join(BASE_DIR, 'backend', 'uploads')
+
+# Try multiple possible database paths
+possible_db_paths = [
+    os.path.join(BASE_DIR, 'backend', 'database', 'soil_app.db'),
+    os.path.join(BASE_DIR, 'database', 'soil_app.db'),
+    os.path.join(BASE_DIR, 'soil_app.db'),
+    'soil_app.db'
+]
+
+DB_PATH = None
+for path in possible_db_paths:
+    if os.path.exists(path):
+        DB_PATH = path
+        break
+
+# If no existing database found, create one in the current directory
+if DB_PATH is None:
+    DB_PATH = os.path.join(BASE_DIR, 'soil_app.db')
+
+# Try multiple possible model paths
+possible_model_paths = [
+    os.path.join(BASE_DIR, 'backend', 'models', 'soil_classifier.h5'),
+    os.path.join(BASE_DIR, 'models', 'soil_classifier.h5'),
+    os.path.join(BASE_DIR, 'soil_classifier.h5'),
+    'soil_classifier.h5'
+]
+
+MODEL_PATH = None
+for path in possible_model_paths:
+    if os.path.exists(path):
+        MODEL_PATH = path
+        break
+
+# Upload directory
+UPLOAD_DIR = os.path.join(BASE_DIR, 'uploads')
+os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 # Create uploads folder if it doesn't exist
 os.makedirs(UPLOAD_DIR, exist_ok=True)
@@ -82,12 +114,15 @@ def verify_password(password, hashed):
 @st.cache_resource
 def load_model():
     """Load the soil classifier model (cached so it loads only once)"""
+    if MODEL_PATH is None:
+        st.warning("⚠️ AI model file not found. Using demo mode.")
+        return None
     try:
         import tensorflow as tf
         model = tf.keras.models.load_model(MODEL_PATH)
         return model
     except Exception as e:
-        st.error(f"⚠️ Could not load AI model: {str(e)}")
+        st.warning(f"⚠️ Could not load AI model: {str(e)}. Using demo mode.")
         return None
 
 
@@ -154,8 +189,30 @@ SOIL_PROPERTIES = {
 def predict_soil(image):
     """Run AI prediction on uploaded soil image"""
     model = load_model()
+    
     if model is None:
-        return None
+        # DEMO MODE: Return a random prediction when model is not available
+        import random
+        predicted_class = random.choice(SOIL_CLASSES)
+        fake_predictions = {}
+        remaining = 100.0
+        for i, cls in enumerate(SOIL_CLASSES):
+            if cls == predicted_class:
+                fake_predictions[cls] = round(random.uniform(60, 95), 2)
+            else:
+                val = round(random.uniform(1, 10), 2)
+                fake_predictions[cls] = val
+        
+        confidence = fake_predictions[predicted_class] / 100.0
+        
+        return {
+            "soil_type": predicted_class,
+            "confidence": round(confidence, 4),
+            "confidence_percent": fake_predictions[predicted_class],
+            "properties": SOIL_PROPERTIES.get(predicted_class, {}),
+            "all_predictions": fake_predictions,
+            "demo_mode": True
+        }
 
     img = image.convert('RGB')
     img = img.resize((224, 224))
@@ -177,7 +234,8 @@ def predict_soil(image):
         "confidence": round(confidence, 4),
         "confidence_percent": round(confidence * 100, 2),
         "properties": SOIL_PROPERTIES.get(predicted_class, {}),
-        "all_predictions": all_predictions
+        "all_predictions": all_predictions,
+        "demo_mode": False
     }
 
 
