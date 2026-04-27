@@ -1,0 +1,25 @@
+# Virtual Environment
+venv/
+.venv/
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Environment
+.env
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Dataset (too large for GitHub)
+backend/models/dataset/
+
+# Uploads
+backend/uploads/*
+!backend/uploads/.gitkeep

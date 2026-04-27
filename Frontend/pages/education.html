@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learn — SoilSense</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">
+            <a href="/"><span class="logo">🌱</span><span class="brand-name">SoilSense</span></a>
+        </div>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/pages/capture.html">Analyze</a>
+            <a href="/pages/education.html" class="active">Learn</a>
+        </div>
+    </nav>
+
+    <main class="education-page">
+        <h1>Learn About Soil & Fertilizers</h1>
+
+        <!-- TABS -->
+        <div class="tab-bar">
+            <button class="tab active" onclick="switchTab('soil-types', this)">
+                🌍 Soil Types
+            </button>
+            <button class="tab" onclick="switchTab('fertilizer-guide', this)">
+                🧪 Fertilizer Guide
+            </button>
+            <button class="tab" onclick="switchTab('seasonal', this)">
+                📅 Seasonal Tips
+            </button>
+        </div>
+
+        <!-- SOIL TYPES TAB -->
+        <div id="soil-types" class="tab-content active">
+            <div id="soilTypesContent" class="education-grid">
+                <p>Loading...</p>
+            </div>
+        </div>
+
+        <!-- FERTILIZER GUIDE TAB -->
+        <div id="fertilizer-guide" class="tab-content">
+            <div id="fertilizerGuideContent">
+                <p>Loading...</p>
+            </div>
+        </div>
+
+        <!-- SEASONAL TAB -->
+        <div id="seasonal" class="tab-content">
+            <div class="seasonal-grid">
+                <div class="season-card spring">
+                    <h3>🌸 Spring</h3>
+                    <ul>
+                        <li>Test soil pH after winter</li>
+                        <li>Apply nitrogen-rich fertilizers</li>
+                        <li>Add compost before planting</li>
+                        <li>Start seedlings indoors</li>
+                    </ul>
+                </div>
+                <div class="season-card summer">
+                    <h3>☀️ Summer</h3>
+                    <ul>
+                        <li>Mulch to retain moisture</li>
+                        <li>Apply potassium for heat stress</li>
+                        <li>Side-dress growing crops</li>
+                        <li>Monitor for nutrient deficiency</li>
+                    </ul>
+                </div>
+                <div class="season-card fall">
+                    <h3>🍂 Fall</h3>
+                    <ul>
+                        <li>Apply phosphorus for root development</li>
+                        <li>Plant cover crops</li>
+                        <li>Add lime if pH is low</li>
+                        <li>Compost fallen leaves</li>
+                    </ul>
+                </div>
+                <div class="season-card winter">
+                    <h3>❄️ Winter</h3>
+                    <ul>
+                        <li>Let cover crops protect soil</li>
+                        <li>Plan next season's rotation</li>
+                        <li>Prepare compost bins</li>
+                        <li>Review soil test results</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="/js/api.js"></script>
+    <script src="/js/education.js"></script>
+</body>
+</html>

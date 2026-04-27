@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register — SoilSense</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">
+            <a href="/"><span class="logo">🌱</span><span class="brand-name">SoilSense</span></a>
+        </div>
+    </nav>
+
+    <div class="auth-container">
+        <div class="auth-card">
+            <h2>Create Account</h2>
+            <p class="auth-subtitle">Start analyzing your soil today</p>
+
+            <div id="registerError" class="error-message" style="display:none;"></div>
+            <div id="registerSuccess" class="success-message" style="display:none;"></div>
+
+            <form id="registerForm" onsubmit="handleRegister(event)">
+                <div class="form-group">
+                    <label for="fullName">Full Name</label>
+                    <input type="text" id="fullName" name="full_name" 
+                           placeholder="Input Name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" 
+                           placeholder="you@email.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="farmName">Farm Name (Optional)</label>
+                    <input type="text" id="farmName" name="farm_name" 
+                           placeholder="Mixed Farm">
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" 
+                           placeholder="Minimum 6 characters" minlength="6" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input type="password" id="confirmPassword" 
+                           placeholder="Repeat your password" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-full" id="registerBtn">
+                    Create Account
+                </button>
+            </form>
+
+            <p class="auth-footer">
+                Already have an account? <a href="/pages/login.html">Login</a>
+            </p>
+        </div>
+    </div>
+
+    <script src="/js/api.js"></script>
+    <script src="/js/auth.js"></script>
+</body>
+</html>

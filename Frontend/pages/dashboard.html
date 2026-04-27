@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard — SoilSense</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/dashboard.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">
+            <a href="/"><span class="logo">🌱</span><span class="brand-name">SoilSense</span></a>
+        </div>
+        <div class="nav-links">
+            <a href="/pages/dashboard.html" class="active">Dashboard</a>
+            <a href="/pages/capture.html">New Analysis</a>
+            <a href="/pages/history.html">History</a>
+            <a href="/pages/education.html">Learn</a>
+            <a href="/pages/profile.html">Profile</a>
+            <a href="#" onclick="logout()" class="btn btn-outline">Logout</a>
+        </div>
+    </nav>
+
+    <main class="dashboard">
+        <div class="dashboard-header">
+            <h1>Welcome, <span id="userName">User</span>! 👋</h1>
+            <a href="/pages/capture.html" class="btn btn-primary">
+                📸 New Analysis
+            </a>
+        </div>
+
+        <!-- STATS CARDS -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">📊</div>
+                <div class="stat-info">
+                    <h3 id="totalAnalyses">0</h3>
+                    <p>Total Analyses</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🎯</div>
+                <div class="stat-info">
+                    <h3 id="avgConfidence">0%</h3>
+                    <p>Avg Confidence</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🏆</div>
+                <div class="stat-info">
+                    <h3 id="topSoilType">N/A</h3>
+                    <p>Most Common Soil</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- CHARTS -->
+        <div class="charts-grid">
+            <div class="chart-card">
+                <h3>Soil Type Distribution</h3>
+                <canvas id="soilDistributionChart"></canvas>
+            </div>
+            <div class="chart-card">
+                <h3>Confidence Over Time</h3>
+                <canvas id="confidenceChart"></canvas>
+            </div>
+        </div>
+
+        <!-- RECENT ANALYSES -->
+        <div class="recent-section">
+            <h3>Recent Analyses</h3>
+            <div id="recentAnalyses" class="recent-grid">
+                <p class="empty-state">No analyses yet. Start by analyzing your soil!</p>
+            </div>
+        </div>
+    </main>
+
+    <script src="/js/api.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/charts.js"></script>
+    <script>
+        // Check auth
+        if (!localStorage.getItem('token')) {
+            window.location.href = '/pages/login.html';
+        }
+        loadDashboard();
+    </script>
+</body>
+</html>

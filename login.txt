@@ -1,0 +1,3 @@
+cd:\C\Users\HUSTLE\Desktop\FERTILE MAP-AI-POWERED
+
+streamlit run streamlit_app.py --server.address=0.0.0.0

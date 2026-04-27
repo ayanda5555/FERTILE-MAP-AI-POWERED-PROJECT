@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SoilSense — AI Soil Analysis</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <span class="logo">🌱</span>
+            <span class="brand-name">SoilSense</span>
+        </div>
+        <div class="nav-links" id="navLinks">
+            <a href="/">Home</a>
+            <a href="/pages/education.html">Learn</a>
+            <div id="authNav">
+                <a href="/pages/login.html" class="btn btn-outline">Login</a>
+                <a href="/pages/register.html" class="btn btn-primary">Sign Up</a>
+            </div>
+            <div id="userNav" style="display:none;">
+                <a href="/pages/dashboard.html">Dashboard</a>
+                <a href="#" onclick="logout()" class="btn btn-outline">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Analyze Your Soil with <span class="highlight">AI</span></h1>
+            <p>Upload a photo of your soil and get instant analysis, fertilizer recommendations, and expert tips to maximize your crop yield.</p>
+            <div class="hero-buttons">
+                <a href="/pages/capture.html" class="btn btn-primary btn-lg">
+                    📸 Analyze Soil Now
+                </a>
+                <a href="/pages/education.html" class="btn btn-outline btn-lg">
+                    📚 Learn More
+                </a>
+            </div>
+        </div>
+        <div class="hero-image">
+            <div class="hero-illustration">
+                <div class="soil-layers">
+                    <div class="layer topsoil"></div>
+                    <div class="layer subsoil"></div>
+                    <div class="layer bedrock"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section class="features" id="features">
+        <h2>How It Works</h2>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <div class="feature-icon">📷</div>
+                <h3>Capture</h3>
+                <p>Take a photo of your soil or upload an existing image from your device.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🤖</div>
+                <h3>AI Analysis</h3>
+                <p>Our trained AI model identifies your soil type and its properties in seconds.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🧪</div>
+                <h3>Recommendations</h3>
+                <p>Get personalized fertilizer recommendations based on your soil and crops.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>Track & Visualize</h3>
+                <p>View your analysis history with beautiful charts and track soil health over time.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SOIL TYPES PREVIEW -->
+    <section class="soil-types-preview">
+        <h2>Soil Types We Analyze</h2>
+        <div class="soil-grid">
+            <div class="soil-card" style="--soil-color: #8B4513;">
+                <div class="soil-circle">🟤</div>
+                <h3>Loamy</h3>
+                <p>Ideal for farming</p>
+            </div>
+            <div class="soil-card" style="--soil-color: #F4D03F;">
+                <div class="soil-circle">🟡</div>
+                <h3>Sandy</h3>
+                <p>Fast draining</p>
+            </div>
+            <div class="soil-card" style="--soil-color: #D35400;">
+                <div class="soil-circle">🔴</div>
+                <h3>Clay</h3>
+                <p>Nutrient rich</p>
+            </div>
+            <div class="soil-card" style="--soil-color: #85929E;">
+                <div class="soil-circle">⚪</div>
+                <h3>Silty</h3>
+                <p>Smooth & fertile</p>
+            </div>
+            <div class="soil-card" style="--soil-color: #1C1C1C;">
+                <div class="soil-circle">⚫</div>
+                <h3>Peaty</h3>
+                <p>Organic rich</p>
+            </div>
+            <div class="soil-card" style="--soil-color: #F5F5DC;">
+                <div class="soil-circle">⬜</div>
+                <h3>Chalky</h3>
+                <p>Alkaline</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>🌱 SoilSense</h3>
+                <p>AI-powered soil analysis for smarter farming.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <a href="/pages/education.html">Education</a>
+                <a href="/pages/capture.html">Analyze Soil</a>
+                <a href="/pages/register.html">Get Started</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 SoilSense. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="/js/auth.js"></script>
+    <script src="/js/app.js"></script>
+</body>
+</html>
+

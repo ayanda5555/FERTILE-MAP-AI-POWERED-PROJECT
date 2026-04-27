@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analyze Soil — SoilSense</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/results.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">
+            <a href="/"><span class="logo">🌱</span><span class="brand-name">SoilSense</span></a>
+        </div>
+        <div class="nav-links">
+            <a href="/pages/dashboard.html">Dashboard</a>
+            <a href="/pages/capture.html" class="active">New Analysis</a>
+            <a href="/pages/history.html">History</a>
+            <a href="/pages/education.html">Learn</a>
+            <a href="#" onclick="logout()" class="btn btn-outline">Logout</a>
+        </div>
+    </nav>
+
+    <main class="capture-page">
+        <!-- UPLOAD SECTION -->
+        <section id="uploadSection" class="upload-section">
+            <h1>Analyze Your Soil</h1>
+            <p>Upload a clear photo of your soil sample for AI-powered analysis</p>
+
+            <div class="upload-area" id="dropZone">
+                <div class="upload-icon">📸</div>
+                <h3>Drag & drop your soil image here</h3>
+                <p>or click to browse files</p>
+                <input type="file" id="fileInput" accept="image/*" 
+                       capture="environment" style="display:none;">
+                <div class="upload-buttons">
+                    <button class="btn btn-primary" onclick="document.getElementById('fileInput').click()">
+                        📁 Choose File
+                    </button>
+                    <button class="btn btn-outline" onclick="openCamera()">
+                        📷 Use Camera
+                    </button>
+                </div>
+            </div>
+
+            <!-- Image Preview -->
+            <div id="previewSection" class="preview-section" style="display:none;">
+                <img id="imagePreview" class="image-preview" alt="Soil preview">
+                <div class="crop-selector">
+                    <label for="cropType">What crop are you planning to grow?</label>
+                    <select id="cropType">
+                        <option value="general">General Recommendation</option>
+                        <option value="wheat">Wheat</option>
+                        <option value="rice">Rice</option>
+                        <option value="corn">Corn</option>
+                        <option value="vegetables">Vegetables</option>
+                    </select>
+                </div>
+                <div class="preview-actions">
+                    <button class="btn btn-primary btn-lg" onclick="analyzeSoil()">
+                        🔬 Analyze Soil
+                    </button>
+                    <button class="btn btn-outline" onclick="clearImage()">
+                        ✖ Clear
+                    </button>
+                </div>
+            </div>
+
+            <!-- Loading -->
+            <div id="loadingSection" class="loading-section" style="display:none;">
+                <div class="spinner"></div>
+                <h3>Analyzing your soil...</h3>
+                <p>Our AI is examining the image</p>
+            </div>
+
+            <!-- Photo Tips -->
+            <div class="tips-card">
+                <h3>📌 Tips for Best Results</h3>
+                <ul>
+                    <li>Use natural daylight — avoid flash</li>
+                    <li>Take the photo from 6-12 inches away</li>
+                    <li>Ensure soil is clearly visible without debris</li>
+                    <li>Include a clear patch of soil, not plants</li>
+                    <li>Slightly moist soil gives better results</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- RESULTS SECTION -->
+        <section id="resultsSection" class="results-section" style="display:none;">
+            <div class="results-header">
+                <h1>Analysis Results</h1>
+                <button class="btn btn-primary" onclick="newAnalysis()">
+                    📸 New Analysis
+                </button>
+            </div>
+
+            <div class="results-grid">
+                <!-- Soil Type Card -->
+                <div class="result-card soil-type-card">
+                    <div class="result-card-header">
+                        <h2>Soil Type</h2>
+                    </div>
+                    <div class="soil-type-result">
+                        <div class="soil-type-name" id="resultSoilType">Loamy</div>
+                        <div class="confidence-meter">
+                            <div class="confidence-bar">
+                                <div class="confidence-fill" id="confidenceFill"></div>
+                            </div>
+                            <span id="confidenceText">92% confidence</span>
+                        </div>
+                    </div>
+                    <img id="resultImage" class="result-soil-image" alt="Analyzed soil">
+                </div>
+
+                <!-- Properties Card -->
+                <div class="result-card">
+                    <h2>Soil Properties</h2>
+                    <div id="propertiesList" class="properties-list">
+                        <!-- Filled by JS -->
+                    </div>
+                </div>
+
+                <!-- Prediction Chart -->
+                <div class="result-card">
+                    <h2>All Predictions</h2>
+                    <canvas id="predictionsChart"></canvas>
+                </div>
+
+                <!-- Fertilizer Recommendations -->
+                <div class="result-card full-width">
+                    <h2>🧪 Fertilizer Recommendations</h2>
+                    <div class="status-badge" id="soilStatus"></div>
+                    <div id="fertilizerList" class="fertilizer-grid">
+                        <!-- Filled by JS -->
+                    </div>
+                </div>
+
+                <!-- Crop-Specific -->
+                <div class="result-card" id="cropSpecificCard" style="display:none;">
+                    <h2>🌾 Crop-Specific Advice</h2>
+                    <div id="cropSpecificList"></div>
+                </div>
+
+                <!-- Organic Alternatives -->
+                <div class="result-card">
+                    <h2>🌿 Organic Alternatives</h2>
+                    <ul id="organicList" class="organic-list">
+                        <!-- Filled by JS -->
+                    </ul>
+                </div>
+
+                <!-- Improvement Tips -->
+                <div class="result-card full-width">
+                    <h2>💡 Improvement Tips</h2>
+                    <div id="tipsList" class="tips-list">
+                        <!-- Filled by JS -->
+                    </div>
+                </div>
+
+                <!-- Soil Composition Chart -->
+                <div class="result-card">
+                    <h2>Soil Composition</h2>
+                    <canvas id="compositionChart"></canvas>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="/js/api.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/capture.js"></script>
+    <script src="/js/analysis.js"></script>
+</body>
+</html>
