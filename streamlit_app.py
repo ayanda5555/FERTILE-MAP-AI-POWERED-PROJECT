@@ -15,10 +15,17 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded"
 )
+<<<<<<< HEAD
 
 # ========== PATHS ==========
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
+=======
+# ========== PATHS ==========
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+# Try multiple possible database paths
+>>>>>>> 0870a03246f440f442bf3b0a183e5502f53ff99a
 possible_db_paths = [
     os.path.join(BASE_DIR, 'backend', 'database', 'soil_app.db'),
     os.path.join(BASE_DIR, 'database', 'soil_app.db'),
@@ -32,9 +39,17 @@ for path in possible_db_paths:
         DB_PATH = path
         break
 
+<<<<<<< HEAD
 if DB_PATH is None:
     DB_PATH = os.path.join(BASE_DIR, 'soil_app.db')
 
+=======
+# If no existing database found, create one in the current directory
+if DB_PATH is None:
+    DB_PATH = os.path.join(BASE_DIR, 'soil_app.db')
+
+# Try multiple possible model paths
+>>>>>>> 0870a03246f440f442bf3b0a183e5502f53ff99a
 possible_model_paths = [
     os.path.join(BASE_DIR, 'backend', 'models', 'soil_classifier.h5'),
     os.path.join(BASE_DIR, 'models', 'soil_classifier.h5'),
@@ -48,15 +63,30 @@ for path in possible_model_paths:
         MODEL_PATH = path
         break
 
+<<<<<<< HEAD
 UPLOAD_DIR = os.path.join(BASE_DIR, 'uploads')
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
+=======
+# Upload directory
+UPLOAD_DIR = os.path.join(BASE_DIR, 'uploads')
+os.makedirs(UPLOAD_DIR, exist_ok=True)
+
+# Create uploads folder if it doesn't exist
+os.makedirs(UPLOAD_DIR, exist_ok=True)
+
+
+>>>>>>> 0870a03246f440f442bf3b0a183e5502f53ff99a
 # ========== DATABASE ==========
 def get_db():
     conn = sqlite3.connect(DB_PATH, check_same_thread=False)
     conn.row_factory = sqlite3.Row
     return conn
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0870a03246f440f442bf3b0a183e5502f53ff99a
 def init_db():
     conn = get_db()
     conn.execute('''
@@ -89,18 +119,37 @@ def init_db():
     conn.commit()
     conn.close()
 
+<<<<<<< HEAD
 init_db()
 
+=======
+
+init_db()
+
+
+>>>>>>> 0870a03246f440f442bf3b0a183e5502f53ff99a
 # ========== PASSWORD HASHING ==========
 def hash_password(password):
     return hashlib.sha256(password.encode()).hexdigest()
 
+<<<<<<< HEAD
 def verify_password(password, hashed):
     return hash_password(password) == hashed
 
 # ========== AI MODEL ==========
 @st.cache_resource
 def load_model():
+=======
+
+def verify_password(password, hashed):
+    return hash_password(password) == hashed
+
+
+# ========== AI MODEL ==========
+@st.cache_resource
+def load_model():
+    """Load the soil classifier model (cached so it loads only once)"""
+>>>>>>> 0870a03246f440f442bf3b0a183e5502f53ff99a
     if MODEL_PATH is None:
         st.warning("⚠️ AI model file not found. Using demo mode.")
         return None
@@ -112,6 +161,10 @@ def load_model():
         st.warning(f"⚠️ Could not load AI model: {str(e)}. Using demo mode.")
         return None
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0870a03246f440f442bf3b0a183e5502f53ff99a
 SOIL_CLASSES = ['chalky', 'clay', 'loamy', 'peaty', 'sandy', 'silty']
 
 SOIL_PROPERTIES = {
@@ -171,6 +224,7 @@ SOIL_PROPERTIES = {
     }
 }
 
+<<<<<<< HEAD
 def predict_soil(image):
     model = load_model()
     
@@ -178,6 +232,19 @@ def predict_soil(image):
         import random
         predicted_class = random.choice(SOIL_CLASSES)
         fake_predictions = {}
+=======
+
+def predict_soil(image):
+    """Run AI prediction on uploaded soil image"""
+    model = load_model()
+    
+    if model is None:
+        # DEMO MODE: Return a random prediction when model is not available
+        import random
+        predicted_class = random.choice(SOIL_CLASSES)
+        fake_predictions = {}
+        remaining = 100.0
+>>>>>>> 0870a03246f440f442bf3b0a183e5502f53ff99a
         for i, cls in enumerate(SOIL_CLASSES):
             if cls == predicted_class:
                 fake_predictions[cls] = round(random.uniform(60, 95), 2)
@@ -220,6 +287,10 @@ def predict_soil(image):
         "demo_mode": False
     }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0870a03246f440f442bf3b0a183e5502f53ff99a
 # ========== FERTILIZER DATABASE ==========
 FERTILIZER_DATABASE = {
     "loamy": {
@@ -345,6 +416,10 @@ FERTILIZER_DATABASE = {
     }
 }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0870a03246f440f442bf3b0a183e5502f53ff99a
 def get_recommendations(soil_type, crop_type="general"):
     soil_data = FERTILIZER_DATABASE.get(soil_type, {})
     result = {
@@ -361,6 +436,10 @@ def get_recommendations(soil_type, crop_type="general"):
         result["available_crops"] = list(soil_data.get("crop_specific", {}).keys())
     return result
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0870a03246f440f442bf3b0a183e5502f53ff99a
 # ========== EDUCATION DATA ==========
 SOIL_EDUCATION = {
     "loamy": {
@@ -413,6 +492,10 @@ NPK_GUIDE = {
     "potassium": {"symbol": "K", "role": "Overall health and disease resistance", "deficiency_signs": "Brown leaf edges", "excess_signs": "Blocks calcium"}
 }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0870a03246f440f442bf3b0a183e5502f53ff99a
 # ========== SESSION STATE ==========
 if 'logged_in' not in st.session_state:
     st.session_state.logged_in = False
@@ -425,6 +508,10 @@ if 'user_email' not in st.session_state:
 if 'farm_name' not in st.session_state:
     st.session_state.farm_name = ""
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0870a03246f440f442bf3b0a183e5502f53ff99a
 # ========== CUSTOM CSS ==========
 st.markdown("""
 <style>
@@ -467,6 +554,10 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0870a03246f440f442bf3b0a183e5502f53ff99a
 # ========== LOGIN / REGISTER PAGE ==========
 def show_auth_page():
     st.markdown('<h1 class="main-header">🌱 FERTILE MAP - AI POWERED</h1>', unsafe_allow_html=True)
@@ -537,11 +628,19 @@ def show_auth_page():
                         st.success("✅ Registration successful! Please login.")
                     db.close()
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0870a03246f440f442bf3b0a183e5502f53ff99a
 # ========== HOME PAGE ==========
 def show_home():
     st.markdown('<h1 class="main-header">🌱 FERTILE MAP - AI POWERED</h1>', unsafe_allow_html=True)
     st.markdown(f"### Welcome back, **{st.session_state.user_name}**! 👋")
 
+<<<<<<< HEAD
+=======
+    # Get stats
+>>>>>>> 0870a03246f440f442bf3b0a183e5502f53ff99a
     db = get_db()
     total = db.execute(
         'SELECT COUNT(*) as count FROM analyses WHERE user_id = ?',
@@ -566,6 +665,10 @@ def show_home():
     ).fetchall()
     db.close()
 
+<<<<<<< HEAD
+=======
+    # Metrics
+>>>>>>> 0870a03246f440f442bf3b0a183e5502f53ff99a
     col1, col2, col3 = st.columns(3)
     with col1:
         st.metric("📊 Total Analyses", total)
@@ -576,6 +679,10 @@ def show_home():
 
     st.markdown("---")
 
+<<<<<<< HEAD
+=======
+    # Soil Distribution
+>>>>>>> 0870a03246f440f442bf3b0a183e5502f53ff99a
     col1, col2 = st.columns(2)
 
     with col1:
@@ -602,6 +709,10 @@ def show_home():
         else:
             st.info("No recent analyses.")
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0870a03246f440f442bf3b0a183e5502f53ff99a
 # ========== SOIL ANALYSIS PAGE ==========
 def show_analysis():
     st.title("📸 Soil Analysis")
@@ -625,9 +736,15 @@ def show_analysis():
         analyze_btn = st.button("🔬 Analyze Soil", use_container_width=True)
 
     with col2:
+<<<<<<< HEAD
         if uploaded_file is not None:
             image = Image.open(uploaded_file)
             st.image(image, caption="📸 Uploaded Soil Image", use_container_width=500)
+=======
+        if uploaded_file:
+            image = Image.open(uploaded_file)
+            st.image(image, caption="📸 Uploaded Soil Image", use_container_width=True)
+>>>>>>> 0870a03246f440f442bf3b0a183e5502f53ff99a
 
     if analyze_btn and uploaded_file:
         with st.spinner("🤖 AI is analyzing your soil..."):
@@ -640,11 +757,19 @@ def show_analysis():
 
             recommendations = get_recommendations(prediction['soil_type'], crop_type)
 
+<<<<<<< HEAD
+=======
+            # Save image
+>>>>>>> 0870a03246f440f442bf3b0a183e5502f53ff99a
             timestamp = datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
             filename = f"user{st.session_state.user_id}_{timestamp}_{uploaded_file.name}"
             filepath = os.path.join(UPLOAD_DIR, filename)
             image.save(filepath)
 
+<<<<<<< HEAD
+=======
+            # Save to database
+>>>>>>> 0870a03246f440f442bf3b0a183e5502f53ff99a
             db = get_db()
             db.execute(
                 '''INSERT INTO analyses 
@@ -657,9 +782,17 @@ def show_analysis():
             db.commit()
             db.close()
 
+<<<<<<< HEAD
         st.markdown("---")
         st.header("📊 Analysis Results")
 
+=======
+        # ===== SHOW RESULTS =====
+        st.markdown("---")
+        st.header("📊 Analysis Results")
+
+        # Soil Type & Confidence
+>>>>>>> 0870a03246f440f442bf3b0a183e5502f53ff99a
         col1, col2, col3 = st.columns(3)
         with col1:
             st.metric("🏷️ Soil Type", prediction['soil_type'].title())
@@ -669,6 +802,10 @@ def show_analysis():
         with col3:
             st.metric("📋 Status", recommendations['status'][:30])
 
+<<<<<<< HEAD
+=======
+        # Confidence bar
+>>>>>>> 0870a03246f440f442bf3b0a183e5502f53ff99a
         if confidence_pct >= 80:
             st.success(f"✅ High confidence: {confidence_pct}%")
         elif confidence_pct >= 50:
@@ -676,6 +813,10 @@ def show_analysis():
         else:
             st.error(f"🔴 Low confidence: {confidence_pct}%")
 
+<<<<<<< HEAD
+=======
+        # All predictions
+>>>>>>> 0870a03246f440f442bf3b0a183e5502f53ff99a
         st.subheader("📊 All Soil Type Probabilities")
         pred_df = pd.DataFrame(
             list(prediction['all_predictions'].items()),
@@ -684,6 +825,10 @@ def show_analysis():
         pred_df = pred_df.sort_values('Probability (%)', ascending=False)
         st.bar_chart(pred_df.set_index('Soil Type'))
 
+<<<<<<< HEAD
+=======
+        # Soil Properties
+>>>>>>> 0870a03246f440f442bf3b0a183e5502f53ff99a
         st.subheader("🔬 Soil Properties")
         props = prediction['properties']
         col1, col2, col3, col4 = st.columns(4)
@@ -699,8 +844,15 @@ def show_analysis():
         with col4:
             st.markdown(f"**Water Holding:** {props.get('water_holding', 'N/A')}")
 
+<<<<<<< HEAD
         st.subheader("🧪 Fertilizer Recommendations")
 
+=======
+        # Fertilizer Recommendations
+        st.subheader("🧪 Fertilizer Recommendations")
+
+        # General fertilizers
+>>>>>>> 0870a03246f440f442bf3b0a183e5502f53ff99a
         st.markdown("#### 💊 Recommended Fertilizers")
         for fert in recommendations.get('general_fertilizers', []):
             with st.expander(f"🔹 {fert['name']}"):
@@ -708,6 +860,10 @@ def show_analysis():
                 st.write(f"**Application:** {fert['application']}")
                 st.write(f"**Frequency:** {fert['frequency']}")
 
+<<<<<<< HEAD
+=======
+        # Crop-specific
+>>>>>>> 0870a03246f440f442bf3b0a183e5502f53ff99a
         if 'crop_specific_fertilizers' in recommendations and recommendations['crop_specific_fertilizers']:
             st.markdown(f"#### 🌾 Specific for: **{crop_type.title()}**")
             for fert in recommendations['crop_specific_fertilizers']:
@@ -715,10 +871,18 @@ def show_analysis():
                     st.write(f"**Dose:** {fert['dose']}")
                     st.write(f"**Timing:** {fert['timing']}")
 
+<<<<<<< HEAD
+=======
+        # Organic Alternatives
+>>>>>>> 0870a03246f440f442bf3b0a183e5502f53ff99a
         st.markdown("#### 🌿 Organic Alternatives")
         for alt in recommendations.get('organic_alternatives', []):
             st.write(f"- 🌿 {alt}")
 
+<<<<<<< HEAD
+=======
+        # Improvement Tips
+>>>>>>> 0870a03246f440f442bf3b0a183e5502f53ff99a
         st.markdown("#### 💡 Soil Improvement Tips")
         for tip in recommendations.get('improvement_tips', []):
             st.write(f"- 💡 {tip}")
@@ -726,6 +890,10 @@ def show_analysis():
     elif analyze_btn and not uploaded_file:
         st.error("❌ Please upload an image first!")
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0870a03246f440f442bf3b0a183e5502f53ff99a
 # ========== HISTORY PAGE ==========
 def show_history():
     st.title("📋 Analysis History")
@@ -755,6 +923,10 @@ def show_history():
             col1, col2 = st.columns([1, 2])
 
             with col1:
+<<<<<<< HEAD
+=======
+                # Show image if exists
+>>>>>>> 0870a03246f440f442bf3b0a183e5502f53ff99a
                 img_path = os.path.join(UPLOAD_DIR, a['image_path'])
                 if os.path.exists(img_path):
                     st.image(img_path, caption="Soil Image", use_container_width=True)
@@ -772,6 +944,10 @@ def show_history():
                 for key, val in properties.items():
                     st.write(f"- {key.replace('_', ' ').title()}: {val}")
 
+<<<<<<< HEAD
+=======
+            # Delete button
+>>>>>>> 0870a03246f440f442bf3b0a183e5502f53ff99a
             if st.button(f"🗑️ Delete", key=f"del_{a['id']}"):
                 db = get_db()
                 db.execute(
@@ -783,6 +959,10 @@ def show_history():
                 st.success("✅ Analysis deleted!")
                 st.rerun()
 
+<<<<<<< HEAD
+=======
+    # Download all as CSV
+>>>>>>> 0870a03246f440f442bf3b0a183e5502f53ff99a
     st.markdown("---")
     db = get_db()
     df = pd.read_sql_query(
@@ -800,6 +980,10 @@ def show_history():
         use_container_width=True
     )
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0870a03246f440f442bf3b0a183e5502f53ff99a
 # ========== EDUCATION PAGE ==========
 def show_education():
     st.title("📚 Soil Education Center")
@@ -855,6 +1039,10 @@ def show_education():
         for m in methods:
             st.markdown(f"- **{m['name']}**: {m['desc']} *(Best for: {m['best']})*")
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0870a03246f440f442bf3b0a183e5502f53ff99a
 # ========== PROFILE PAGE ==========
 def show_profile():
     st.title("👤 My Profile")
@@ -895,10 +1083,19 @@ def show_profile():
                     st.success("✅ Profile updated!")
                     st.rerun()
 
+<<<<<<< HEAD
 # ========== MAIN APP ==========
 if not st.session_state.logged_in:
     show_auth_page()
 else:
+=======
+
+# ========== SIDEBAR & NAVIGATION ==========
+if not st.session_state.logged_in:
+    show_auth_page()
+else:
+    # Sidebar
+>>>>>>> 0870a03246f440f442bf3b0a183e5502f53ff99a
     st.sidebar.title("🌱 FERTILE MAP")
     st.sidebar.markdown(f"👤 **{st.session_state.user_name}**")
     st.sidebar.markdown(f"🌾 {st.session_state.farm_name or 'No farm set'}")
@@ -906,7 +1103,12 @@ else:
 
     page = st.sidebar.radio(
         "Navigate",
+<<<<<<< HEAD
         ["🏠 Home", "📸 Soil Analysis", "📋 History", "📚 Education", "👤 Profile"]
+=======
+        ["🏠 Home", "📸 Soil Analysis", "📋 History",
+         "📚 Education", "👤 Profile"]
+>>>>>>> 0870a03246f440f442bf3b0a183e5502f53ff99a
     )
 
     st.sidebar.markdown("---")
@@ -923,6 +1125,10 @@ else:
     st.sidebar.markdown("Made with ❤️ by FERTILE MAP Team")
     st.sidebar.markdown("© 2024 All Rights Reserved")
 
+<<<<<<< HEAD
+=======
+    # Page routing
+>>>>>>> 0870a03246f440f442bf3b0a183e5502f53ff99a
     if page == "🏠 Home":
         show_home()
     elif page == "📸 Soil Analysis":
@@ -932,4 +1138,8 @@ else:
     elif page == "📚 Education":
         show_education()
     elif page == "👤 Profile":
+<<<<<<< HEAD
         show_profile()
+=======
+        show_profile()
+>>>>>>> 0870a03246f440f442bf3b0a183e5502f53ff99a

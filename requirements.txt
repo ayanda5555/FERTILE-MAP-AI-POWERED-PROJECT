@@ -2,5 +2,10 @@ streamlit==1.31.0
 pandas==2.1.4
 numpy==1.26.4
 pillow==10.2.0
+<<<<<<< HEAD
 tensorflow-cpu==2.15.0
 matplotlib==3.8.0
+=======
+tensorflow==2.15.0
+matplotlib==3.10.8
+>>>>>>> 0870a03246f440f442bf3b0a183e5502f53ff99a
